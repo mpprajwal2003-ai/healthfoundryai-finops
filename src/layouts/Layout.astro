@@ -1,0 +1,95 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Healthcare FinOps | Revenue Cycle & Supply Chain | HealthFoundry",
+  description = "HealthFoundry's FinOps agents reduce revenue leakage across claims management, package profitability, payer intelligence, and supply chain optimisation."
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="system">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <script is:inline>
+    // Inline FOUC prevention script for theme initialization
+    (function() {
+      const savedTheme = localStorage.getItem('themePreference') || 'system';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+</head>
+<body>
+  <slot />
+
+  <script>
+    // Global Theme & Modal Client-side Interactivity
+    function initTheme() {
+      // Theme Selector Logic
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const themeMenu = document.getElementById('themeMenu');
+      const themeOptions = document.querySelectorAll('.theme-option');
+
+      function setTheme(theme: string) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('themePreference', theme);
+
+        themeOptions.forEach(opt => {
+          if (opt.getAttribute('data-theme-val') === theme) {
+            opt.classList.add('active');
+          } else {
+            opt.classList.remove('active');
+          }
+        });
+      }
+
+      const currentTheme = localStorage.getItem('themePreference') || 'system';
+      setTheme(currentTheme);
+
+      if (themeToggleBtn && themeMenu) {
+        themeToggleBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          themeMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!themeMenu.contains(e.target as Node) && !themeToggleBtn.contains(e.target as Node)) {
+            themeMenu.classList.remove('show');
+          }
+        });
+      }
+
+      themeOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+          const selectedTheme = opt.getAttribute('data-theme-val');
+          if (selectedTheme) {
+            setTheme(selectedTheme);
+            themeMenu?.classList.remove('show');
+          }
+        });
+      });
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (localStorage.getItem('themePreference') === 'system') {
+          setTheme('system');
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTheme);
+    } else {
+      initTheme();
+    }
+  </script>
+</body>
+</html>

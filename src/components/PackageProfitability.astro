@@ -1,0 +1,92 @@
+---
+---
+<section class="section" id="pkg">
+  <div class="container">
+    <div class="section-label">PACKAGE PROFITABILITY</div>
+    <h2 class="section-title heading-font">
+      Not every package generates a margin.<br>
+      <span class="accent">Most hospitals don't know which ones don't.</span>
+    </h2>
+    <p class="section-intro">
+      The gap between what a procedure costs to deliver and what the payer reimburses is often invisible — until it accumulates into a structural profitability problem. Our Package Profitability capability makes that gap visible, attributable, and actionable.
+    </p>
+
+    <div class="pkg-steps-grid">
+      <div class="pkg-step-card">
+        <h4>01. Actual billing analysis</h4>
+        <p>Agent reads actual billing data across procedures, service lines, and payer categories — building a granular picture of what was charged for each episode of care and how it was reimbursed.</p>
+      </div>
+      <div class="pkg-step-card">
+        <h4>02. Compare with reimbursable amount</h4>
+        <p>Actual cost-to-deliver is compared against the reimbursable package rate for each payer. Packages where the delta is consistently negative are identified and ranked by financial impact.</p>
+      </div>
+      <div class="pkg-step-card">
+        <h4>03. Review the package master</h4>
+        <p>The agent maps loss-generating packages against the package master — reviewing included components, consumable assumptions, and procedure bundling — to identify origin points.</p>
+      </div>
+    </div>
+
+    <div class="pkg-output-banner">
+      <h4>Package Optimisation Recommendations</h4>
+      <p>Agent surfaces structured recommendations — adjustments to package composition, consumable substitutions, or bundling changes — that can improve profitability for specific packages without compromising care quality.</p>
+      <div class="hitl-callout" style="background: var(--bg-card);">
+        <span>🛡️</span>
+        <div><strong>Human-in-the-Loop Governance:</strong> Finance and clinical leadership review all recommendations. No package master changes without human approval.</div>
+      </div>
+    </div>
+
+    <!-- Interactive Package Profitability Table Simulator -->
+    <div class="interactive-table-wrapper">
+      <div class="table-header-title">
+        <span>Live FinOps Package Profitability Analyzer</span>
+        <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-muted);">Sample Hospital Billing Audit Data</span>
+      </div>
+      <table class="finops-table">
+        <thead>
+          <tr>
+            <th>Procedure Package</th>
+            <th>Payer Category</th>
+            <th>Avg Delivery Cost</th>
+            <th>Reimbursed Rate</th>
+            <th>Margin Delta</th>
+            <th>Status / Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Total Knee Replacement (TKR)</td>
+            <td>Commercial Insurance</td>
+            <td>₹ 2,45,000</td>
+            <td>₹ 2,80,000</td>
+            <td>+ ₹ 35,000 (+14%)</td>
+            <td><span class="badge-gain">Profitable</span></td>
+          </tr>
+          <tr>
+            <td>Coronary Angioplasty (Single Stent)</td>
+            <td>Government Scheme</td>
+            <td>₹ 1,28,000</td>
+            <td>₹ 1,12,000</td>
+            <td>- ₹ 16,000 (-12%)</td>
+            <td><span class="badge-loss">Structural Loss</span></td>
+          </tr>
+          <tr>
+            <td>Laparoscopic Cholecystectomy</td>
+            <td>TPA Partner</td>
+            <td>₹ 78,000</td>
+            <td>₹ 85,000</td>
+            <td>+ ₹ 7,000 (+9%)</td>
+            <td><span class="badge-gain">Profitable</span></td>
+          </tr>
+          <tr>
+            <td>Oncology Chemotherapy Cycle 3</td>
+            <td>Corporate Insurer</td>
+            <td>₹ 95,000</td>
+            <td>₹ 88,000</td>
+            <td>- ₹ 7,000 (-7%)</td>
+            <td><span class="badge-loss">Structural Loss</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

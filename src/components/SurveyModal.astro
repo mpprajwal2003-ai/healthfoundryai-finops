@@ -1,0 +1,270 @@
+---
+---
+<div class="modal-overlay" id="surveyModalOverlay">
+  <div class="survey-modal">
+    <div class="modal-header">
+      <div class="modal-title heading-font">FinOps Revenue Leakage Survey</div>
+      <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+    </div>
+
+    <div class="survey-body">
+      <!-- Progress Bar -->
+      <div class="survey-progress-bar">
+        <div class="survey-progress-fill" id="surveyProgressFill"></div>
+      </div>
+
+      <form id="surveyForm">
+        <!-- Step 1: Hospital Profile -->
+        <div class="survey-step active" data-step="1">
+          <h3 class="heading-font" style="margin-bottom: 8px;">Step 1: Hospital Profile</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+            Help us tailor the FinOps recovery calculation to your healthcare organization.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="hospitalName">Hospital / Health System Name</label>
+            <input type="text" class="form-input" id="hospitalName" placeholder="e.g. City General Hospital" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="hospitalType">Organization Type</label>
+            <select class="form-select" id="hospitalType">
+              <option value="multispecialty">Multispecialty Hospital</option>
+              <option value="single">Single Specialty Center</option>
+              <option value="chain">Hospital Network / Chain</option>
+              <option value="clinic">Daycare / Surgical Center</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="bedCount">Total Bed Capacity</label>
+            <select class="form-select" id="bedCount">
+              <option value="100">Under 100 Beds</option>
+              <option value="250" selected>100 – 300 Beds</option>
+              <option value="500">300 – 500 Beds</option>
+              <option value="1000">500+ Beds</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Step 2: Revenue Operations Scale -->
+        <div class="survey-step" data-step="2">
+          <h3 class="heading-font" style="margin-bottom: 8px;">Step 2: Claims & Billing Scale</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+            Provide an approximate volume for your insurance & scheme claims.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="claimVolume">Monthly Claim Volume</label>
+            <select class="form-select" id="claimVolume">
+              <option value="500">Under 500 Claims / Month</option>
+              <option value="2000" selected>500 – 2,500 Claims / Month</option>
+              <option value="5000">2,500 – 7,500 Claims / Month</option>
+              <option value="10000">7,500+ Claims / Month</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="payerMix">Primary Payer Mix</label>
+            <select class="form-select" id="payerMix">
+              <option value="gov">Majority Government Schemes (Ayushman / CGHS)</option>
+              <option value="commercial">Majority Commercial TPA / Insurance</option>
+              <option value="balanced" selected>Balanced Mixed (Govt + Commercial)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Step 3: Leakage Points Assessment -->
+        <div class="survey-step" data-step="3">
+          <h3 class="heading-font" style="margin-bottom: 8px;">Step 3: Key FinOps Pain Points</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+            Select all revenue leakage points currently affecting your operations:
+          </p>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="painPoint" value="denials" checked>
+              High claim denial rate / delayed query resolution
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="painPoint" value="packages" checked>
+              Unprofitable procedure packages delivered at a loss
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="painPoint" value="guidelines" checked>
+              Late absorption of changing payer bulletins & guidelines
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="painPoint" value="assembly">
+              Excessive manual staff time spent on data assembly
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="painPoint" value="supply">
+              Clinical supply chain overstocking & inventory leakage
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 4: Instant FinOps ROI & Recovery Report -->
+        <div class="survey-step" data-step="4">
+          <h3 class="heading-font" style="margin-bottom: 8px;">Step 4: Your FinOps Assessment Result</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px;">
+            Based on your hospital profile and claims volume, here is your estimated recovery potential:
+          </p>
+
+          <div class="survey-report-card">
+            <span style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--accent-primary);">
+              Estimated Annual Revenue Recovery
+            </span>
+            <div class="report-highlight-val" id="recoveryAmountDisplay">₹ 42.5 L – ₹ 85.0 L</div>
+            <p style="font-size: 0.92rem; color: var(--text-secondary);">
+              Estimated <strong>45% TAT Reduction</strong> in claim submission speed and <strong>12 pp improvement</strong> in first-pass acceptance rates.
+            </p>
+          </div>
+
+          <div class="form-group" style="margin-top: 20px;">
+            <label class="form-label" for="workEmail">Work Email (to receive detailed blueprint PDF)</label>
+            <input type="email" class="form-input" id="workEmail" placeholder="name@hospital.com" required>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="surveyPrevBtn" style="visibility: hidden;">
+        ← Back
+      </button>
+      <button class="btn btn-accent" id="surveyNextBtn">
+        Next Step →
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initSurveyModal() {
+    const modalOverlay = document.getElementById('surveyModalOverlay');
+    const openSurveyBtns = document.querySelectorAll('.open-survey-btn');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const surveyPrevBtn = document.getElementById('surveyPrevBtn');
+    const surveyNextBtn = document.getElementById('surveyNextBtn');
+    const surveyProgressFill = document.getElementById('surveyProgressFill');
+    const surveySteps = document.querySelectorAll('.survey-step');
+
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    function openModal() {
+      if (modalOverlay) {
+        modalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal() {
+      if (modalOverlay) {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    openSurveyBtns.forEach(btn => btn.addEventListener('click', openModal));
+    modalCloseBtn?.addEventListener('click', closeModal);
+
+    modalOverlay?.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay?.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    function validateCurrentStep(): boolean {
+      if (currentStep === 1) {
+        const hospInput = document.getElementById('hospitalName') as HTMLInputElement;
+        if (hospInput && !hospInput.checkValidity()) {
+          hospInput.reportValidity();
+          return false;
+        }
+      } else if (currentStep === 4) {
+        const emailInput = document.getElementById('workEmail') as HTMLInputElement;
+        if (emailInput && !emailInput.checkValidity()) {
+          emailInput.reportValidity();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function updateStepUI() {
+      const progressPercent = (currentStep / totalSteps) * 100;
+      if (surveyProgressFill) surveyProgressFill.style.width = `${progressPercent}%`;
+
+      surveySteps.forEach(step => {
+        const stepNum = parseInt(step.getAttribute('data-step') || '1', 10);
+        if (stepNum === currentStep) {
+          step.classList.add('active');
+        } else {
+          step.classList.remove('active');
+        }
+      });
+
+      if (surveyPrevBtn) {
+        surveyPrevBtn.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+      }
+
+      if (surveyNextBtn) {
+        if (currentStep === totalSteps) {
+          surveyNextBtn.textContent = 'Submit & Request Blueprint ✓';
+          calculateROI();
+        } else {
+          surveyNextBtn.textContent = 'Next Step →';
+        }
+      }
+    }
+
+    surveyNextBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!validateCurrentStep()) return;
+
+      if (currentStep < totalSteps) {
+        currentStep++;
+        updateStepUI();
+      } else {
+        alert('Thank you! Your FinOps Revenue Recovery Blueprint has been generated and sent to your email.');
+        closeModal();
+        currentStep = 1;
+        updateStepUI();
+      }
+    });
+
+    surveyPrevBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (currentStep > 1) {
+        currentStep--;
+        updateStepUI();
+      }
+    });
+
+    function calculateROI() {
+      const claimVolumeEl = document.getElementById('claimVolume') as HTMLSelectElement;
+      const recoveryDisplay = document.getElementById('recoveryAmountDisplay');
+      const claimVolume = parseInt(claimVolumeEl?.value || '2000', 10);
+
+      let minRec = Math.round(claimVolume * 180 * 12 / 100000 * 10) / 10;
+      let maxRec = Math.round(minRec * 2.1 * 10) / 10;
+
+      if (recoveryDisplay) {
+        recoveryDisplay.textContent = `₹ ${minRec} L – ₹ ${maxRec} L`;
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSurveyModal);
+  } else {
+    initSurveyModal();
+  }
+</script>

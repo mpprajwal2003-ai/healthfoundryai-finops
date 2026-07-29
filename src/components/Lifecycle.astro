@@ -1,0 +1,136 @@
+---
+---
+<section class="section" id="lifecycle">
+  <div class="container">
+    <div class="section-label">CLAIMS LIFECYCLE</div>
+    <h2 class="section-title heading-font">
+      The Claims Lifecycle: eight stages, bottlenecks at each one
+    </h2>
+    <p class="section-intro">
+      Every stage from patient registration through settlement carries a distinct failure mode. HealthFoundry agents support your team at each stage, reducing manual data assembly and surfacing exceptions for human review.
+    </p>
+
+    <!-- Interactive Stage Tabs -->
+    <div class="lifecycle-stepper" id="lifecycleStepper">
+      <button class="stage-tab active" data-stage="0">
+        <span class="stage-num-badge">1</span> Patient Registration
+      </button>
+      <button class="stage-tab" data-stage="1">
+        <span class="stage-num-badge">2</span> Pre-Authorisation
+      </button>
+      <button class="stage-tab" data-stage="2">
+        <span class="stage-num-badge">3</span> Clinical Coding
+      </button>
+      <button class="stage-tab" data-stage="3">
+        <span class="stage-num-badge">4</span> Assembly & Submission
+      </button>
+      <button class="stage-tab" data-stage="4">
+        <span class="stage-num-badge">5</span> Query Management
+      </button>
+      <button class="stage-tab" data-stage="5">
+        <span class="stage-num-badge">6</span> Settlement Reconciliation
+      </button>
+      <button class="stage-tab" data-stage="6">
+        <span class="stage-num-badge">7</span> Deduction Management
+      </button>
+      <button class="stage-tab" data-stage="7">
+        <span class="stage-num-badge">8</span> Reauthorisation
+      </button>
+    </div>
+
+    <!-- Stage Active Inspector Panel -->
+    <div class="stage-detail-panel" id="stageDetailPanel">
+      <div class="detail-block">
+        <h4>Typical Stage Bottleneck & Failure Mode</h4>
+        <p id="stageFailureText">
+          Incomplete insurance identification at admission leads to downstream coverage mismatches and delayed authorization requests.
+        </p>
+      </div>
+      <div class="detail-block">
+        <h4>FinOps Agent Intervention</h4>
+        <p id="stageAgentText">
+          Agent cross-references patient demographic and payer portal databases instantaneously at intake to verify active policy eligibility and pre-auth limits.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initLifecycle() {
+    const lifecycleData = [
+      {
+        title: "Patient Registration",
+        failure: "Incomplete insurance identification at admission leads to downstream coverage mismatches and delayed authorization requests.",
+        agent: "Agent cross-references patient demographic and payer portal databases instantaneously at intake to verify active policy eligibility and pre-auth limits."
+      },
+      {
+        title: "Pre-Authorisation",
+        failure: "Manual authorization tracking causes procedure delays, unapproved treatment additions, and initial claim rejections.",
+        agent: "Agent monitors pre-auth request statuses in real-time, auto-attaching required clinical justifications and alerting staff to pending approvals."
+      },
+      {
+        title: "Clinical Documentation & Coding",
+        failure: "Uncaptured clinical procedures or misaligned ICD-10/CPT coding creates compliance queries and under-billing.",
+        agent: "Agent performs pre-submission coding validation against scheme package codes and clinical notes to prevent documentation gaps."
+      },
+      {
+        title: "Claim Assembly & Submission",
+        failure: "Manual collation of billing items, lab reports, and discharge summaries leads to submission backlogs and submission TAT spikes.",
+        agent: "Agent automates multi-document assembly into payer-specific digital formats, verifying full packet completeness prior to instant submission."
+      },
+      {
+        title: "Query Management",
+        failure: "Payer queries stall in department inboxes, causing claim aging beyond contract settlement limits.",
+        agent: "Agent categorizes incoming queries, drafts structured clinical responses for human review, and tracks closure SLAs."
+      },
+      {
+        title: "Adjudication Monitoring & Settlement Reconciliation",
+        failure: "Unexplained line-item shortfalls and delayed remittance advices go unnoticed, draining cash flow.",
+        agent: "Agent matches bank settlement advice line-by-line against submitted claims, flagging payment shortfalls automatically."
+      },
+      {
+        title: "Deduction & Rejection Management",
+        failure: "High volume of minor deductions are written off because manual appeal workflows cost more than the deduction value.",
+        agent: "Agent scores appeal viability, generates evidence-backed appeal dossiers, and tracks recovered revenue through final settlement."
+      },
+      {
+        title: "Reauthorisation",
+        failure: "Extended inpatient stays exceed initial pre-auth limits without timely reauthorization, risking non-coverage of extended days.",
+        agent: "Agent tracks inpatient length of stay against pre-auth expiry thresholds and triggers reauthorization requests proactively."
+      }
+    ];
+
+    const stageTabs = document.querySelectorAll('.stage-tab');
+    const stageFailureText = document.getElementById('stageFailureText');
+    const stageAgentText = document.getElementById('stageAgentText');
+
+    stageTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        stageTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const stageIndex = parseInt(tab.getAttribute('data-stage') || '0', 10);
+        const data = lifecycleData[stageIndex];
+
+        if (data && stageFailureText && stageAgentText) {
+          stageFailureText.style.opacity = '0';
+          stageAgentText.style.opacity = '0';
+
+          setTimeout(() => {
+            stageFailureText.textContent = data.failure;
+            stageAgentText.textContent = data.agent;
+            stageFailureText.style.opacity = '1';
+            stageAgentText.style.opacity = '1';
+          }, 150);
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLifecycle);
+  } else {
+    initLifecycle();
+  }
+</script>
