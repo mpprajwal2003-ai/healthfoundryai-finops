@@ -14,7 +14,7 @@ jobs:
           curl -H "Authorization: token ${{ secrets.CROSS_REPO_PAT }}" \
             -H "Accept: application/vnd.github.raw+json" \
             -o src/content/solutions-finops.md \
-            https://api.github.com/repos/mpprajwal2003-ai/healthfoundry-main/contents/solutions-finops.md
+            https://api.github.com/repos/mpprajwal2003-ai/healthfoundry-main/contents/src/data/solutions-finops.md
 
       - name: Commit if changed
         run: |
