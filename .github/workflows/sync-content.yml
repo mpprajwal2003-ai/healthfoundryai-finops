@@ -1,0 +1,26 @@
+name: Sync product.md from main site
+on:
+  repository_dispatch:
+    types: [product-md-updated]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest product.md from Repo A
+        run: |
+          curl -H "Authorization: token ${{ secrets.CROSS_REPO_PAT }}" \
+            -H "Accept: application/vnd.github.raw+json" \
+            -o src/content/products/product.md \
+            https://api.github.com/repos/mpprajwal2003-ai/healthfoundry-main/contents/content/products/product.md
+
+      - name: Commit if changed
+        run: |
+          git config user.name "content-sync-bot"
+          git config user.email "bot@yourcompany.com"
+          git add src/content/products/product.md
+          git diff --staged --quiet || git commit -m "chore: sync product.md from main site"
+          git push
+      # Your host (Vercel/Netlify/Cloudflare Pages) auto-deploys on push
