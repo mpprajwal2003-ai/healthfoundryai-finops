@@ -1,4 +1,6 @@
 ---
+import { frontmatter } from '../data/solutions-finops.md';
+const { hero = {} } = frontmatter || {};
 ---
 <section class="hero-section" id="hero">
   <div class="container">
@@ -10,21 +12,22 @@
             <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
             <polyline points="17 6 23 6 23 12"></polyline>
           </svg>
-          FinOps
+          {hero.pill || "FinOps"}
         </div>
         
         <h1 class="hero-title heading-font">
-          Revenue Cycle Operations,<br>
-          <span class="accent">Rethought</span>
+          {hero.titleLine1 || "Revenue Cycle Operations,"}<br>
+          <span class="accent">{hero.titleAccent || "Rethought"}</span>
         </h1>
 
         <p class="hero-subtitle">
-          Reduce revenue leakage across the full revenue cycle — not just claims
+          {hero.subtitle || "Reduce revenue leakage across the full revenue cycle — not just claims"}
         </p>
 
         <p class="hero-body">
-          Revenue is lost at every stage: claims delayed by manual data assembly, deductions that go unchallenged, packages priced below their true cost, payer guidelines absorbed too late. HealthFoundry's FinOps agents work across the full revenue cycle — surfacing leakage, quantifying its financial impact, and supporting your team to act on it — while keeping humans in control of every consequential decision.
+          {hero.body}
         </p>
+
 
         <div class="hero-actions">
           <button class="btn btn-primary open-survey-btn">
